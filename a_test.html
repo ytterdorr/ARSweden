@@ -1,17 +1,62 @@
-<!doctype HTML>
+<!DOCTYPE html>
 <html>
-<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
-<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"> </script>
-  <body style='margin : 0px; overflow: hidden;'>
-    <a-scene stats embedded arjs='trackingMethod: best;'>
-    	<a-assets>
-    <img id="sweden" src="Sweden_Map.png">
-  </a-assets>
-      <a-marker preset="hiro">
-      <a-plane src="#sweden" height="3" width="3" rotation="-90 0 0"></a-plane>
+  <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+  <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"></script>
+  <!-- Add jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- queries -->
+  <script src="queries.js"></script>
+
+  
+    <body style='margin : 0px; overflow: hidden;'>
+      <a-scene stats embedded arjs='trackingMethod: best;'>
+      	<a-assets>
+      <img id="sweden" src="Sweden_Map.png">
+    </a-assets>
+        <a-marker preset="hiro">
+        <a-plane class="mainPlane" src="#sweden" position="0 1 0" height="5" width="5" rotation="-90 0 0"></a-plane>
+        <a-box class="center-point" position="0 1 0" width="0.1" height="0.001" depth="0.1" color="red"></a-box>
       </a-marker>
-      <a-entity camera></a-entity color="red">
-    </a-scene>
-  </body>
+        <a-entity camera></a-entity color="red">
+      </a-scene>
+    </body>
+ 
+  <script>
+    $("document").ready(function() {
+      $(".mainPlane").attr("rotation", "-90 0 0");
+      let sthlmData, gbgData;
+      let sthlmPos = "0.5 1 0.7";
+      let gbgPos = "-1 1 1.5";
+      $.post(ageUrl, ageQuery, function(returnData, status) {
+        //console.log(data_use);
+        let testSthlmData = returnData.data["0"].values;
+        let testGbgData = returnData.data["1"].values;
+        let sthlmPop = Number(testSthlmData[0]) + Number(testSthlmData[1]);
+        let gbgPop = Number(testGbgData[0]) + Number(testGbgData[1]);
+        let maxHeight = sthlmPop * 2;
+        let sthlmHeight = sthlmPop / maxHeight;
+        let gbgHeight = gbgPop / maxHeight;
+        sthlmData = sthlmHeight;
+        gbgData = gbgHeight;
+        console.log("Sthlm:" + sthlmData);
+        console.log("Gbg: " + gbgData);
+        const sthlmBox =
+        "<a-box color='blue' position='" +
+        sthlmPos +
+        "' width=0.1 depth=0.1 height=" +
+        sthlmData +
+        "></a-box>";
+      const gbgBox =
+        "<a-box color='blue' position='" +
+        gbgPos +
+        "' width=0.1 depth=0.1 height=" +
+        gbgData +
+        "></a-box>";
+      $("a-marker").append(sthlmBox);
+      $("a-marker").append(gbgBox);
+      });
+     
+    });
+  </script>
 </html>

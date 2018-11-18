@@ -5,13 +5,11 @@
 <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"> </script>
   <body style='margin : 0px; overflow: hidden;'>
     <a-scene stats embedded arjs='trackingMethod: best;'>
-    	<a-assets>
-    <img id="sweden" src="Sweden_Map.png">
-  </a-assets>
       <a-marker preset="hiro">
-      <a-plane src="#sweden" height="3" width="3" rotation="-90 0 0"></a-plane>
+      <a-box position='0 1 0' material='color: blue;'>
+      </a-box>
       </a-marker>
-      <a-entity camera></a-entity color="red">
+      <a-entity camera></a-entity>
     </a-scene>
   </body>
 </html>
