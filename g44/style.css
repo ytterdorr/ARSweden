@@ -1,0 +1,44 @@
+
+header {
+	height: 5vh;
+}
+
+.container {
+	width: 100vw;
+	height: 100vh;
+	background-color: blue;
+	padding: 5px;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+}
+
+.card {
+	padding: 5px;
+	margin: 2px;
+	height: 40vh;
+}
+
+.card-title {
+	color: blue;
+}
+
+
+
+
+.card_picture {
+	background-size: cover;
+	background-repeat: no-repeat;
+	overflow: hidden;
+
+	width: 100%;
+	height: 100%;
+}
+
+.ar_picture {
+	background-image: url("ar_house.jpg");
+}
+
+.normal_picture {
+	background-image: url("Sweden_Map.png");
+}
