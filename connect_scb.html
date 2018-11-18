@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Connect</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+	<h1>Hello</h1>
+
+	<p class="result"></p>
+
+	<script type="text/javascript">
+		$("document").ready(function() {
+			$("h1").html("Open");
+			let url = "http://api.scb.se/OV0104/v1/doris/sv/ssd/BE/BE0101/BE0101A/BefolkningNy";
+			let data = {
+"query": [
+ {
+ "code": "ContentsCode",
+  "selection": {
+    "filter": "item",
+    "values": [
+      "BE0101N1"
+    ]
+   }
+},
+{
+  "code": "Tid",
+   "selection": {
+   "filter": "item",
+   "values": [
+   "2010",
+   "2011"
+   ]
+  }
+ }
+],
+"response": {
+  "format": "json"
+ }
+}
+
+data = JSON.stringify(data);
+
+			$.post( "ajax/test.html", function( data ) {
+  $( ".result" ).html( data );
+});
+		})
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"
+    />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <style>
+      .menu {
+      }
+      ul {
+        padding: 5px;
+      }
+      li {
+        margin: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Meny</h1>
+      <div class="menu"></div>
+      <ul class="buttons"></ul>
+    </div>
+    <script>
+      let button_list = [];
+      $("document").ready(function() {
+        let menyData = $.get(
+          "http://api.scb.se/OV0104/v1/doris/sv/ssd/",
+          function(data) {
+            console.log(data);
+            for (i in data) {
+              let text = data[i].text;
+              console.log(text);
+              button_list += text;
+              let newButton =
+                "<li class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>" +
+                text +
+                "</li>";
+              $(".buttons").append(newButton);
+            }
+          }
+        );
+      });
+    </script>
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  </body>
+</html>

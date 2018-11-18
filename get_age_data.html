@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Data</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>Hello :)</h1>
+    <button class="btn">Get stuff</button>
+    <p class="result"></p>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        const Url =
+          "http://api.scb.se/OV0104/v1/doris/sv/ssd/BE/BE0101/BE0101A/BefolkningNy";
+        let apiQuery = {
+          query: [
+            {
+              code: "Region",
+              selection: {
+                filter: "vs:RegionLän07",
+                values: ["01", "14"]
+              }
+            },
+            {
+              code: "Alder",
+              selection: {
+                filter: "agg:Ålder10år",
+                values: ["15-24"]
+              }
+            },
+            {
+              code: "Kon",
+              selection: {
+                filter: "item",
+                values: ["1"]
+              }
+            },
+            {
+              code: "Tid",
+              selection: {
+                filter: "item",
+                values: ["2017"]
+              }
+            }
+          ],
+          response: {
+            format: "json"
+          }
+        };
+        data = JSON.stringify(apiQuery);
+        console.log(apiQuery);
+        let return_data = {};
+        $(".btn").click(function() {
+          $.post(Url, data, function(data_use, status) {
+            //console.log(data_use);
+            console.log(data_use);
+            regex = /(?=DATA\=)[\s\S]*/;
+            /*
+        result = data_use.match(regex);
+        console.log(data_use.match(regex));
+        result = data_use.split("\n");
+        console.log(result)
+        $(".result").html(result)
+        for(let i in result) {
+          let [key, value] = result[i].split("=")
+          if (value) {
+            value = value.slice(0, value.length-2);
+          }
+          console.log(key, value)
+        }
+        */
+          });
+          /*
+
+
+			$.ajax({
+				url: "http://api.scb.se/OV0104/v1/doris/sv/ssd/START/BE/BE0101/BE0101B/BefolkningMedelAlder",
+				type: "GET",
+				success: function(result){
+					console.log(result)
+				},
+				error: function(error) {
+					console.log(`Error ${error}`)
+				}
+			})
+			*/
+        });
+      });
+    </script>
+  </body>
+</html>
