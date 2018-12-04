@@ -34,25 +34,76 @@
       <ul class="buttons"></ul>
     </div>
     <script>
+      // Get variable from URL
+      $.urlParam = function(name) {
+        var results = new RegExp("[\?&]" + name + "=([^&#]*)").exec(
+          window.location.href
+        );
+        return results[1] || 0;
+      };
+
+      let url_tail = $.urlParam("url");
+      console.log(url_tail);
+      if (url_tail == "%22%22") {
+        console.log("url_tail empty");
+        url_tail = "";
+      }
+
+      console.log(url_tail);
+
+      function butto_menu_dive() {}
+
+      // let this_url = "http://api.scb.se/OV0104/v1/doris/sv/ssd/" + url_tail;
+      let this_url = "http://api.scb.se/OV0104/v1/doris/sv/" + url_tail;
       let button_list = [];
       $("document").ready(function() {
-        let menyData = $.get(
-          "http://api.scb.se/OV0104/v1/doris/sv/ssd/",
-          function(data) {
-            console.log(data);
-            for (i in data) {
-              let text = data[i].text;
-              console.log(text);
-              button_list += text;
-              let newButton =
-                "<li class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>" +
-                text +
-                "</li>";
-              $(".buttons").append(newButton);
-            }
+        /*
+          I want to display:
+          - BE Befolkning
+          - MI Miljö
+          - ME Demokrati
+          - NR Nationalräkenskaper
+
+        */
+        let wantedItems = ["BE", "MI", "ME", "NR"];
+        let menyData = $.get(this_url, function(data) {
+          //console.log(data);
+          for (i in data) {
+            let btn_text = data[i].text;
+            let btn_id = data[i].id;
+
+            //console.log(btn_text);
+            button_list += { text: btn_text, id: btn_id };
+            let newButton = document.createElement("li");
+            newButton.classList.add("mdl-list__item");
+            newButton.onclick = function() {
+              let new_tail = "/" + btn_id;
+              window.location.href += new_tail;
+            };
+            newButton.innerHTML = btn_text;
+            $(".buttons").append(newButton);
           }
-        );
+        });
       });
+      console.log(buttons);
+      console.log(window.location.href);
+
+      /*
+      var id_in_list = wantedItems.find(function(element) {
+              return element == btn_id;
+            });
+
+            console.log(id_in_list);
+
+            if (id_in_list) {
+
+               let newButton =
+              "<li onclick=`window.location.href+='/'+this.id` id='" +
+              btn_id +
+              "' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>" +
+              btn_text +
+              "</li>";
+      */
     </script>
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
   </body>
