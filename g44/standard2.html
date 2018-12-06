@@ -47,6 +47,10 @@
         right: 2em;
         bottom: 2em;
       }
+
+      .fab-button:hover {
+        background-color: blue;
+      }
     </style>
   </head>
   <body>
@@ -79,19 +83,25 @@
           </nav>
         </div>
         <main class="mdl-layout__content">
-          <div class="page-content"><!-- Your content goes here --></div>
+          <div class="page-content">
+            <!-- Your content goes here -->
+            <button id="hitta-data-knapp" onclick="" class="fab-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                <i class="material-icons">equalizer</i>
+              </button>
+          </div>
         </main>
       </div>
 
 
 
-        <button id="hitta-data-knapp" class="fab-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-          <i class="material-icons">equalizer</i>
-        </button></div></div>
+        </div></div>
     </div>
   </body>
 
   <script type="text/javascript">
+    document.getElementById("hitta-data-knapp").onclick = function () {
+      this.style="background-color: blue;"
+}
     document.getElementById("hitta-data-knapp").onclick = function () {
         location.href = "hitta_data.html";
     };
